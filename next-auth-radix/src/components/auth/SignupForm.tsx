@@ -64,16 +64,62 @@ function SignupForm() {
           <TextField.Slot>
             <EnvelopeClosedIcon height="16" width="16" />
           </TextField.Slot>
-          <TextField.Input type="email" placeholder="email@example.com" />
+          <Controller
+            name="email"
+            control={control}
+            rules={{
+              required: {
+                message: "Email is required",
+                value: true,
+              },
+              minLength: {
+                message: "Email must be at least 6 characters",
+                value: 6,
+              },
+            }}
+            render={({ field }) => {
+              return (
+                <TextField.Input
+                  type="email"
+                  placeholder="email@example.com"
+                  {...field}
+                />
+              );
+            }}
+          />
         </TextField.Root>
+        {errors.email && <Text color="ruby">{errors.email.message}</Text>}
 
         <label htmlFor="password">Password</label>
         <TextField.Root>
           <TextField.Slot>
             <LockClosedIcon height="16" width="16" />
           </TextField.Slot>
-          <TextField.Input type="password" placeholder="*********" />
+          <Controller
+            name="password"
+            control={control}
+            rules={{
+              required: {
+                message: "Password is required",
+                value: true,
+              },
+              minLength: {
+                message: "Password must be at least 6 characters",
+                value: 6,
+              },
+            }}
+            render={({ field }) => {
+              return (
+                <TextField.Input
+                  type="password"
+                  placeholder="*********"
+                  {...field}
+                />
+              );
+            }}
+          />
         </TextField.Root>
+        {errors.password && <Text color="ruby">{errors.password.message}</Text>}
 
         <Button type="submit" mt="4">
           Sign In
