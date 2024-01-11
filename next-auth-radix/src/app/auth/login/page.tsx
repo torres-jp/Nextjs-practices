@@ -1,14 +1,18 @@
-import { Button } from "@radix-ui/themes";
-import { BookmarkFilledIcon } from "@radix-ui/react-icons";
+import SigninForm from "@/components/auth/SigninForm";
+import { Card, Container, Flex, Heading } from "@radix-ui/themes";
 
 function LoginPage() {
   return (
-    <div>
-      LoginPage
-      <Button>
-        <BookmarkFilledIcon width="16" height="16" /> login
-      </Button>
-    </div>
+    <>
+      <Container size="1" height="100%" className="p-3 md:p-0">
+        <Flex className="h-screen w-full items-center">
+          <Card className="w-full">
+            <Heading>Sign IN</Heading>
+            <SigninForm />
+          </Card>
+        </Flex>
+      </Container>
+    </>
   );
 }
 
