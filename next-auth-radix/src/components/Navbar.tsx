@@ -13,7 +13,6 @@ import { CaretDownIcon } from "@radix-ui/react-icons";
 
 function Navbar() {
   const { data: session } = useSession();
-  console.log(session);
 
   return (
     <Container className="bg-slate-800 py-4">
