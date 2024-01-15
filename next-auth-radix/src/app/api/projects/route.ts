@@ -9,7 +9,11 @@ export async function POST(req: Request) {
   const session = await getServerSession(authOptions)
   console.log(session)
 
-  const newProject = await prisma.project.create({ data });
+  const newProject = await prisma.project.create({ 
+    data: {
+        title: data.title,
+        description: data.description
+    } });
 
   return NextResponse.json(newProject,{
     status: 201,
