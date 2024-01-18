@@ -8,8 +8,8 @@ function DashboardPage() {
   return (
     <Container className="mt-10">
       <div className="flex  justify-between">
-        <Heading>Tasks</Heading>
-        <Button onClick={() => router.push("/dashboard/tasks/new")}>
+        <Heading>Projects</Heading>
+        <Button onClick={() => router.push("/dashboard/projects/new")}>
           Add Task
         </Button>
       </div>
