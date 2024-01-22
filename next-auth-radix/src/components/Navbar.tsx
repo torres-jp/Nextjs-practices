@@ -15,7 +15,7 @@ function Navbar() {
   const { data: session } = useSession();
 
   return (
-    <Container className="bg-slate-800 py-4">
+    <Container className="bg-slate-800 py-4 px-10 md:px-0">
       <Flex justify="between" align="center">
         <NavLink href="/" passHref>
           <Heading>Radix-Next</Heading>

@@ -13,12 +13,15 @@ import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import { useRouter, useParams } from "next/navigation";
 import { TrashIcon } from "@radix-ui/react-icons";
+import { toast } from "sonner";
+import { useEffect } from "react";
 
 function TaskNewPage() {
   const {
     control,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     values: {
       title: "",
@@ -27,7 +30,7 @@ function TaskNewPage() {
   });
 
   const router = useRouter();
-  const params = useParams();
+  const params = useParams() as { projectId: string };
 
   const onSubmit = handleSubmit(async (data) => {
     if (!params.projectId) {
@@ -37,14 +40,39 @@ function TaskNewPage() {
         router.refresh();
       }
     } else {
-      console.log("updating");
+      const res = await axios.put(`/api/projects/${params.projectId}`, data);
+      if (res.status === 200) {
+        router.push("/dashboard");
+        router.refresh();
+      }
     }
   });
+
+  const handleDelete = async (projectId: string) => {
+    const res = await axios.delete(`/api/projects/${projectId}`);
+
+    if (res.status === 200) {
+      toast.success("Project deleted successfully");
+    }
+
+    router.push("/dashboard");
+    router.refresh();
+  };
+
+  useEffect(() => {
+    if (params.projectId) {
+      axios.get(`/api/projects/${params.projectId}`).then((res) => {
+        console.log(res);
+        setValue("title", res.data.title);
+        setValue("description", res.data.description);
+      });
+    }
+  }, []);
 
   return (
     <div>
       <Container size="1" height="100%" className="p-3 md:p-0">
-        <Flex className="h-screen w-full items-center">
+        <Flex className="h-[calc(100vh-10rem)] w-full items-center">
           <Card className="w-full p-7">
             <form onSubmit={onSubmit} className="flex flex-col gap-y-2">
               <Heading>
@@ -110,7 +138,10 @@ function TaskNewPage() {
             </form>
             <div className="flex justify-end my-4">
               {params.projectId && (
-                <Button color="red">
+                <Button
+                  color="red"
+                  onClick={() => handleDelete(params.projectId)}
+                >
                   <TrashIcon />
                   Delete Project
                 </Button>

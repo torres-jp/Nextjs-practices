@@ -18,14 +18,14 @@ async function DashboardPage() {
   const projects = await loadProject(parseInt(session?.user.id as string));
 
   return (
-    <Container className="mt-10">
+    <Container className="mt-10 px-10 md:px-0">
       <HeaderDashboard />
 
-      <Grid columns="3" gap="4" mt="4">
+      <div className="grid md:grid-cols-3 gap-4 my-4">
         {projects.map((project) => (
           <ProjectsCards project={project} key={project.id} />
         ))}
-      </Grid>
+      </div>
     </Container>
   );
 }
